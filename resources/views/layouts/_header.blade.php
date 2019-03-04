@@ -6,7 +6,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item {{isActive(route('index'))}}">
+            <li class="nav-item {{isActive(route('index')."/",14)}}">
                 <a class="nav-link ml-2" href="{{ route('index') }}">主页</a>
             </li>
             <li class="nav-item">
@@ -15,20 +15,38 @@
         </ul>
 
         <ul class="navbar-nav mr-5 justify-content-end">
-            @if(\App\Models\Role::is_teacher($user))
-                <li class="nav-item">
-                    <a class="nav-link" href="#">学生管理</a>
-                </li>
-            @endif
             @if(\Illuminate\Support\Facades\Auth::check())
+                @if(\App\Models\Role::is_teacher(\Illuminate\Support\Facades\Auth::user()))
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown_teacher" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            学生管理
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">学生列表</a>
+                            <a class="dropdown-item" href="#">学生编辑</a>
+                        </div>
+                    </li>
+                @endif
+                @if(\App\Models\Role::is_manager(\Illuminate\Support\Facades\Auth::user()))
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown_manager" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           用户管理
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('managers.index') }}">用户列表</a>
+                            <a class="dropdown-item" href="{{ route('managers.role') }}">角色列表</a>
+                            <a class="dropdown-item" href="{{ route('managers.create') }}">角色添加</a>
+                        </div>
+                    </li>
+                @endif
                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown_normal" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ \Illuminate\Support\Facades\Auth::user()->name }}
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('users.show',\Illuminate\Support\Facades\Auth::user()) }}">个人中心</a>
-                    <a class="dropdown-item" href="{{ route('users.edit',\Illuminate\Support\Facades\Auth::user()) }}">编辑资料</a>
-                <div class="dropdown-divider"></div>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('users.show',\Illuminate\Support\Facades\Auth::user()) }}">个人中心</a>
+                        <a class="dropdown-item" href="{{ route('users.edit',\Illuminate\Support\Facades\Auth::user()) }}">编辑资料</a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('logout') }}">退出登出</a>
                 </div>
                 </li>

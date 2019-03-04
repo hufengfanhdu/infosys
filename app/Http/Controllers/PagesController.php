@@ -31,7 +31,7 @@ class PagesController extends Controller
             $email = $request->input('email');
             $password = $request->input('password');
 
-            if (Auth::attempt(['email' => $email, 'password' => $password])){
+            if (Auth::attempt(['email' => $email, 'password' => $password], $request->has('remember'))){
                 $fallback = route('index');
                 return redirect()->intended($fallback)->with('success','欢迎回来'.$user->name);
             }else{

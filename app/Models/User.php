@@ -10,31 +10,46 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'password','introduction'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function role(){
+    //角色
+    public function roles(){
         return $this->hasMany(Role::class);
+    }
+
+    //学生
+    public function students(){
+        return $this->belongsToMany(User::class,'teachers','user_id','teacher_id');
+    }
+
+    //教师
+    public function teachers(){
+        return $this->belongsToMany(User::class,'teachers','teacher_id','user_id');
+    }
+
+    //教师绑定学生
+    public function teach($userIds){
+        if ( !is_array($userIds) ){
+            $userIds = compact('userIds');
+        }
+        $this->students()->sync($userIds,false);
+    }
+
+    //教师解绑学生
+    public function unfollow($userIds){
+        if ( !is_array($userIds) ){
+            $userIds = compact('userIds');
+        }
+        $this->students()->detach($userIds);
     }
 }

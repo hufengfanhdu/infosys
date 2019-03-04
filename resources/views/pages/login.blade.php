@@ -29,8 +29,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="remember" id="check">
+                        <label class="form-check-label" for="check">记住我</label>
+                    </div>
+                </div>
                 <div class="mt-4">
-                    <a href="{{ route('users.create') }}" class="offset-sm-7">还没账号,现在注册</a>
+                    <a href="#" class="offset-sm-8">忘记密码</a>
                     <button type="submit" class="btn btn-primary ml-5">登入</button>
                 </div>
             </form>

@@ -14,11 +14,7 @@ class UsersController extends Controller
 {
     public function __construct(){
         $this->middleware('auth',['except' => ['show','create','store']]);
-    }
-
-    public function index()
-    {
-        return ;
+        $this->middleware('manager',['only' => ['destroy']]);
     }
 
     //注册
@@ -64,14 +60,12 @@ class UsersController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    //删除
+    public function destroy(User $user)
     {
-        //
+        $this->authorize('destroy',$user);
+        $user->delete();
+        return redirect()->back()->with('success','删除操作成功');
     }
+
 }

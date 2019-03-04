@@ -15,7 +15,7 @@ class Role extends Model
         return $this->belongsTo(User::class);
     }
 
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id','role'];
 
     //显示用户角色
     public static function show_roles($roles){
@@ -31,13 +31,18 @@ class Role extends Model
 
     //获得用户的所有角色
     public static function get_roles(User $user){
-        $arr = $user->role->all();
+        $arr = $user->roles->all();
         return array_column($arr,'role');
     }
 
     public static function is_teacher(User $user){
         $roles = self::get_roles($user);
         return in_array(self::TEACHERS,$roles)? true : false;
+    }
+
+    public static function is_manager(User $user){
+        $roles = self::get_roles($user);
+        return in_array(self::MANAGERS,$roles)? true : false;
     }
 
 }

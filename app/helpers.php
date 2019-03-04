@@ -11,7 +11,7 @@
  * @param  string  $path
  * @return 'active' or null
  */
-function isActive(string $path){
-    $dealtPath = substr($path,14)."/";
+function isActive(string $path,int $start){
+    $dealtPath = substr($path,$start);
     return request()->getPathInfo() == $dealtPath ? 'active' : '';
 }
