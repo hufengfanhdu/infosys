@@ -1,4 +1,3 @@
-<h3 class="card-title mb-3">系统角色列表</h3>
 <table class="table">
     <thead class="thead-dark">
     <tr>

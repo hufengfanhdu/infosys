@@ -21,8 +21,21 @@ class ManagersController extends Controller
         return view('managers.userList',compact('users'));
     }
 
-    public function role(){
-        $roles = Role::with('user')->paginate(5);
+    public function role($option = Role::UNKNOWN ){
+        switch ($option){
+            case Role::UNKNOWN:
+                $roles = Role::with('user')->paginate(5);
+                break;
+            case Role::MANAGERS:
+                $roles = Role::where('role',Role::MANAGERS)->with('user')->paginate(5);
+                break;
+            case Role::TEACHERS:
+                $roles = Role::where('role',Role::TEACHERS)->with('user')->paginate(5);
+                break;
+            case Role::STUDENTS:
+                $roles = Role::where('role',Role::STUDENTS)->with('user')->paginate(5);
+                break;
+        }
         return view('managers.roleList',compact('roles'));
     }
 

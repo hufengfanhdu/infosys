@@ -1,4 +1,3 @@
-<h3 class="card-title mb-3">系统用户列表</h3>
 <table class="table">
     <thead class="thead-dark">
     <tr>
@@ -25,6 +24,7 @@
             </td>
             <td>{{ $user->updated_at->diffForHumans() }}</td>
             <td>
+                <a href="{{ route('users.show',compact('user')) }}" class="btn btn-light">详情</a>
                 <a href="{{ route('users.edit',compact('user')) }}" class="btn btn-light">编辑</a>
                 <form action="{{ route('users.destroy', $user->id) }}" method="POST"
                       style="display: inline-block;"

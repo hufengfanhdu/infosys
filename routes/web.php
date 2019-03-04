@@ -27,7 +27,7 @@ Route::resource('users','UsersController')->except('index');
 //Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
 
 Route::get('/managers','ManagersController@index')->name('managers.index');
-Route::get('/managers/role','ManagersController@role')->name('managers.role');
+Route::get('/managers/role/{option?}','ManagersController@role')->name('managers.role');
 Route::delete('/managers/{role}','ManagersController@delete')->name('managers.destroy');
 Route::get('/managers/create','ManagersController@create')->name('managers.create');
 Route::post('/managers','ManagersController@store')->name('managers.store');

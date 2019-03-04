@@ -45,4 +45,9 @@ class Role extends Model
         return in_array(self::MANAGERS,$roles)? true : false;
     }
 
+    public static function is_student(User $user){
+        $roles = self::get_roles($user);
+        return in_array(self::STUDENTS,$roles)? true : false;
+    }
+
 }
