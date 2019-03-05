@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoleAddRequest;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -40,7 +39,7 @@ class ManagersController extends Controller
     }
 
     public function delete(Role $role){
-        $this->authorize('destroy', $role->user);
+        $this->authorize('user_destroy', $role->user);
         $role->delete();
         return redirect()->back()->with('success','角色删除成功');
     }

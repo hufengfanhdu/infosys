@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class RoleAddRequest extends FormRequest
@@ -15,11 +16,19 @@ class RoleAddRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'id' => 'exists:users,id|required|integer',
-            'select' => 'required|integer|'.Rule::unique('roles','role')->where('user_id',request()->input('id')),
-            'password' => 'required'
-        ];
+        if (isActive(route('managers.store'),14)){
+            return [
+                'id' => 'exists:users,id|required|integer',
+                'select' => 'required|integer|'.Rule::unique('roles','role')->where('user_id',request()->input('id')),
+                'password' => 'required'
+            ];
+        }else {
+            return [
+                'id' => 'exists:users,id|required|integer|'.Rule::unique('teachers','user_id')->where('teacher_id', Auth::id()),
+                'password' => 'required'
+            ];
+        }
+
     }
 
     public function messages()
@@ -35,7 +44,7 @@ class RoleAddRequest extends FormRequest
     public function attributes()
     {
         return [
-            'id' => '用户ID',
+            'id' => '该用户',
             'select' => '该权限',
             'password' => '密码'
         ];

@@ -19,23 +19,23 @@
                 @if(\App\Models\Role::is_teacher(\Illuminate\Support\Facades\Auth::user()))
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown_teacher" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            学生管理
+                            教师中心
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">学生列表</a>
-                            <a class="dropdown-item" href="#">学生编辑</a>
+                            <a class="dropdown-item" href="{{ route('teachers.index') }}">学生列表</a>
+                            <a class="dropdown-item" href="{{ route('teachers.create') }}">学生添加</a>
                         </div>
                     </li>
                 @endif
                 @if(\App\Models\Role::is_manager(\Illuminate\Support\Facades\Auth::user()))
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown_manager" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           用户管理
+                           管理中心
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('managers.index') }}">用户列表</a>
-                            <a class="dropdown-item" href="{{ route('managers.role') }}">角色列表</a>
-                            <a class="dropdown-item" href="{{ route('managers.create') }}">角色添加</a>
+                            <a class="dropdown-item" href="{{ route('managers.index') }}">用户管理</a>
+                            <a class="dropdown-item" href="{{ route('managers.role') }}">角色管理</a>
+                            <a class="dropdown-item" href="{{ route('managers.create') }}">教师添加</a>
                         </div>
                     </li>
                 @endif

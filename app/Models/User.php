@@ -27,29 +27,30 @@ class User extends Authenticatable
         return $this->hasMany(Role::class);
     }
 
-    //学生
-    public function students(){
-        return $this->belongsToMany(User::class,'teachers','user_id','teacher_id');
-    }
 
-    //教师
-    public function teachers(){
+    //教师的学生
+    public function students(){
         return $this->belongsToMany(User::class,'teachers','teacher_id','user_id');
     }
 
+    //学生的教师
+    public function teachers(){
+        return $this->belongsToMany(User::class,'teachers','user_id','teacher_id');
+    }
+
     //教师绑定学生
-    public function teach($userIds){
-        if ( !is_array($userIds) ){
-            $userIds = compact('userIds');
+    public function teach($userId){
+        if ( !is_array($userId) ){
+            $userId = compact('userId');
         }
-        $this->students()->sync($userIds,false);
+        $this->students()->sync($userId,false);
     }
 
     //教师解绑学生
-    public function unfollow($userIds){
-        if ( !is_array($userIds) ){
-            $userIds = compact('userIds');
+    public function unTeach($userId){
+        if ( !is_array($userId) ){
+            $userId = compact('userId');
         }
-        $this->students()->detach($userIds);
+        $this->students()->detach($userId);
     }
 }

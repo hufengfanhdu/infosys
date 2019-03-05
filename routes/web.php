@@ -26,8 +26,15 @@ Route::resource('users','UsersController')->except('index');
 //Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 //Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
 
+//管理员操作
 Route::get('/managers','ManagersController@index')->name('managers.index');
 Route::get('/managers/role/{option?}','ManagersController@role')->name('managers.role');
 Route::delete('/managers/{role}','ManagersController@delete')->name('managers.destroy');
 Route::get('/managers/create','ManagersController@create')->name('managers.create');
 Route::post('/managers','ManagersController@store')->name('managers.store');
+
+//教师操作
+Route::get('/teachers','TeachersController@index')->name('teachers.index');
+Route::get('/teachers/create','TeachersController@create')->name('teachers.create');
+Route::post('/teachers','TeachersController@store')->name('teachers.store');
+Route::delete('/teachers/{student}','TeachersController@destroy')->name('teachers.destroy');
