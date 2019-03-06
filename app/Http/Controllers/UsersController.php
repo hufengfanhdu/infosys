@@ -23,16 +23,17 @@ class UsersController extends Controller
         return view('users.create');
     }
 
-    //保存
+    //注册
     public function store(Request $request)
     {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'activation_token' => str_random(30)
         ]);
 
-        return redirect()->route('index',[$user])->with('success',"注册成功！");
+        return redirect()->route('login')->with('success',"注册成功！");
     }
 
     //个人中心

@@ -9,9 +9,6 @@
             <li class="nav-item {{isActive(route('index')."/",14)}}">
                 <a class="nav-link ml-2" href="{{ route('index') }}">主页</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">动态</a>
-            </li>
         </ul>
 
         <ul class="navbar-nav mr-5 justify-content-end">
@@ -24,6 +21,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('teachers.index') }}">学生列表</a>
                             <a class="dropdown-item" href="{{ route('teachers.create') }}">学生添加</a>
+                            <a class="dropdown-item" href="#">通知模块</a>
                         </div>
                     </li>
                 @endif
@@ -46,6 +44,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('users.show',\Illuminate\Support\Facades\Auth::user()) }}">个人中心</a>
                         <a class="dropdown-item" href="{{ route('users.edit',\Illuminate\Support\Facades\Auth::user()) }}">编辑资料</a>
+                        <a class="dropdown-item" href="#">通知列表</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('logout') }}">退出登出</a>
                 </div>

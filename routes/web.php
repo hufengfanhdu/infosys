@@ -17,6 +17,8 @@ Route::get('/', 'PagesController@index')->name('index');
 Route::get('/login','PagesController@login_create')->name('login');
 Route::post('/login','PagesController@login_store')->name('login');
 Route::get('/logout','PagesController@logout')->name('logout');
+Route::post('/validate/{user}','PagesController@send_email')->name('validate_email');
+Route::get('/confirm/{token}','PagesController@confirm_email')->name('confirm_email');
 
 Route::resource('users','UsersController')->except('index');
 //Route::get('/users/create', 'UsersController@create')->name('users.create');
