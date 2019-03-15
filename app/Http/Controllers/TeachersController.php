@@ -12,6 +12,7 @@ class TeachersController extends Controller
 {
     public function __construct(){
         $this->middleware('teacher');
+        $this->middleware('auth');
     }
 
     //学生列表

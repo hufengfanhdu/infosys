@@ -1,5 +1,5 @@
 <div class="card w-25" >
-    <img class="card-img-top" src="/uploads/images/avatars/normal.png" alt="头像未能正常显示">
+    <img class="card-img-top" src="{{ $user->avatar ? $user->avatar : '/uploads/images/avatars/normal.png' }}" alt="头像未能正常显示">
     <div class="card-body">
         <h3 class="card-title">
             @foreach( $user->roles->all() as $role)

@@ -13,13 +13,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+//登入操作
 Route::get('/', 'PagesController@index')->name('index');
 Route::get('/login','PagesController@login_create')->name('login');
 Route::post('/login','PagesController@login_store')->name('login');
 Route::get('/logout','PagesController@logout')->name('logout');
 Route::post('/validate/{user}','PagesController@send_email')->name('validate_email');
 Route::get('/confirm/{token}','PagesController@confirm_email')->name('confirm_email');
+Route::get('login/github', 'PagesController@redirectToProvider')->name('login_github');
+Route::get('auth/github/callback', 'PagesController@handleProviderCallback');
 
+//用户
 Route::resource('users','UsersController')->except('index');
 //Route::get('/users/create', 'UsersController@create')->name('users.create');
 //Route::get('/users/{user}', 'UsersController@show')->name('users.show');

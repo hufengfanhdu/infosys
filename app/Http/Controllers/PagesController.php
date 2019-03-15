@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class PagesController extends Controller
 {
@@ -17,6 +18,7 @@ class PagesController extends Controller
            'only' => ['login_create','login_store','send_email','confirm_email']
         ]);
         $this->middleware('throttle:5,1')->only('send_email');
+        $this->middleware('throttle:3,10')->only('login_store');
     }
 
     public function index() {
@@ -53,6 +55,35 @@ class PagesController extends Controller
         }
     }
 
+    //github登入
+    public function redirectToProvider()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    //处理callback
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('github')->user();    //obj
+
+        $find = User::where('email', $user->email)->first();
+        if (!$find) {
+            $data = User::create([
+            'name' => $user->name,
+            'email' => $user->email
+            ]);
+            $data->provider = "github";
+            $data->provider_id = $user->id;
+            $data->avatar = $user->avatar;
+            $data->save();
+            Auth::login($data);
+        }else{
+            Auth::login($find);
+        }
+
+        return redirect()->route('index');
+    }
+
     public function logout() {
         Auth::logout();
         return redirect()->route('index')->with('success','成功登出');
@@ -61,6 +92,7 @@ class PagesController extends Controller
     public function send_email(User $user){
         $token = $user->activation_token;
         Mail::to($user)->send(new ValidateEmail($token));
+        return response('邮件已经发送',200);
     }
 
     public function confirm_email($token){

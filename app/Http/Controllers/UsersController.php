@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
@@ -24,7 +25,7 @@ class UsersController extends Controller
     }
 
     //注册
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
@@ -64,7 +65,7 @@ class UsersController extends Controller
     //删除
     public function destroy(User $user)
     {
-        $this->authorize('destroy',$user);
+        $this->authorize('user_destroy',$user);
         $user->delete();
         return redirect()->back()->with('success','删除操作成功');
     }
