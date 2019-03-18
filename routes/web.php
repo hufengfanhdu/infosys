@@ -18,10 +18,19 @@ Route::get('/', 'PagesController@index')->name('index');
 Route::get('/login','PagesController@login_create')->name('login');
 Route::post('/login','PagesController@login_store')->name('login');
 Route::get('/logout','PagesController@logout')->name('logout');
+Route::get('/email','PagesController@email_bind')->name('email_bind');
+Route::post('/email','PagesController@email_store')->name('email_store');
 Route::post('/validate/{user}','PagesController@send_email')->name('validate_email');
 Route::get('/confirm/{token}','PagesController@confirm_email')->name('confirm_email');
-Route::get('login/github', 'PagesController@redirectToProvider')->name('login_github');
-Route::get('auth/github/callback', 'PagesController@handleProviderCallback');
+//github登入
+Route::get('login/github', 'PagesController@redirectToGitHub')->name('login_github');
+Route::get('auth/github/callback', 'PagesController@handleGitHubCallback');
+//微信登入
+Route::get('login/weixin', 'PagesController@redirectToWeiXin')->name('login_weixin');
+Route::get('auth/weixin/callback', 'PagesController@handleWeiXinCallback');
+//QQ登入
+Route::get('login/qq', 'PagesController@redirectToQQ')->name('login_qq');
+Route::get('auth/qq/callback', 'PagesController@handleQQCallback');
 
 //用户
 Route::resource('users','UsersController')->except('index');
@@ -44,3 +53,4 @@ Route::get('/teachers','TeachersController@index')->name('teachers.index');
 Route::get('/teachers/create','TeachersController@create')->name('teachers.create');
 Route::post('/teachers','TeachersController@store')->name('teachers.store');
 Route::delete('/teachers/{student}','TeachersController@destroy')->name('teachers.destroy');
+

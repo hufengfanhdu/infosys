@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -56,45 +57,108 @@ class PagesController extends Controller
     }
 
     //github登入
-    public function redirectToProvider()
+    public function redirectToGitHub()
     {
         return Socialite::driver('github')->redirect();
     }
-
-    //处理callback
-    public function handleProviderCallback()
+    //处理github callback
+    public function handleGitHubCallback()
     {
         $user = Socialite::driver('github')->user();    //obj
 
-        $find = User::where('email', $user->email)->first();
+        $find = User::where('github_id', $user->id)->first();
         if (!$find) {
             $data = User::create([
             'name' => $user->name,
-            'email' => $user->email
+            'email' => $user->email,
             ]);
-            $data->provider = "github";
-            $data->provider_id = $user->id;
+            $data->provider = User::PROVIDER_GITHUB;
+            $data->github_id = $user->id;
             $data->avatar = $user->avatar;
             $data->save();
-            Auth::login($data);
-        }else{
-            Auth::login($find);
+
+            $find = $data;
         }
 
+        Auth::login($find);
         return redirect()->route('index');
     }
 
+    //Weixin登入
+    public function redirectToWeiXin()
+    {
+        return Socialite::driver('weixin')->redirect();
+    }
+    //处理 微信 callback
+    public function handleWeiXinCallback()
+    {
+        $user = Socialite::driver('weixin')->user();
+        $user = $user->user;    //arr
+        $find = User::where('openid',$user['openid'])->first();
+        if (!$find){
+            $data = User::create([
+               'name' => $user['nickname'],
+                'activation_token' => str_random(30)
+            ]);
+            $data->provider = User::PROVIDER_WEIXIN;
+            $data->openid = $user['openid'];
+            $data->avatar = $user['headimgurl'];
+            $data->save();
+
+            $find = $data;
+        }
+
+        Auth::login($find);
+        if (!$find->email){
+            session()->flash('warning','请绑定邮箱以保证我们为您提供更好的服务');
+        }
+        return redirect()->route('index');
+    }
+
+    //QQ登入
+    public function redirectToQQ(){
+        return Socialite::driver('qq')->redirect();
+    }
+    //处理 QQ callback
+    public function handleQQCallback(){
+        $user = Socialite::driver('qq')->user();
+        var_dump($user->nickname);
+    }
+
+    //登出
     public function logout() {
         Auth::logout();
         return redirect()->route('index')->with('success','成功登出');
     }
 
+    //绑定邮箱
+    public function email_bind(){
+        return view('users.email_bind');
+    }
+
+    public function email_store(){
+        $validate = Validator::make(\request()->all(),
+            ['email' => 'email|unique:users,email']);
+        if ($validate->fails()){
+            return redirect()->back()->withErrors($validate);
+        }else{
+            $user = Auth::user();
+            $user->email = \request()->input('email');
+            $user->save();
+
+            $status = $this->send_email($user);
+            dd($status);
+        }
+
+    }
+
+    //发送邮箱验证
     public function send_email(User $user){
         $token = $user->activation_token;
         Mail::to($user)->send(new ValidateEmail($token));
-        return response('邮件已经发送',200);
     }
 
+    //验证邮箱
     public function confirm_email($token){
         $user = User::where('activation_token',$token)->firstOrFail();
 

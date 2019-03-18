@@ -10,6 +10,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const PROVIDER_GITHUB = 1;
+    const PROVIDER_WEIXIN = 2;
+    const PROVIDER_QQ = 3;
+
     protected $fillable = [
         'name', 'email', 'password','introduction','activation_token'
     ];

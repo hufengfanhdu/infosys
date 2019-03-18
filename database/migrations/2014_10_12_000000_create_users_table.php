@@ -16,13 +16,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();  //第三方登入邮箱可以为空
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable;
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->string('provider')->nullable();
-            $table->string('provider_id')->nullable();
+            $table->tinyInteger('provider')->nullable()->comment('1-github|2-weixin|3-qq');
+            $table->string('github_id')->nullable()->index();
+            $table->string('openid')->nullable()->comment('微信OPEN_ID')->index();
+            $table->string('qq_id')->nullable()->index();
         });
     }
 

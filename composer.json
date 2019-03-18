@@ -12,7 +12,10 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/socialite": "^4.1",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "socialiteproviders/qq": "^3.0",
+        "socialiteproviders/weixin": "^4.0",
+        "socialiteproviders/weixin-web": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "~3.2",

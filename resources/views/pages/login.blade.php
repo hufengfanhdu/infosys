@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','用户登录')
+@section('title','第三方注册')
 
 @section('msg_wide','w-75')
 
@@ -30,6 +30,7 @@
                 <div class="mt-4">
                     <a href="#" class="">忘记密码</a>
                     <a href="{{ route('login_github') }}" class="ml-1">Github登入</a>
+                    <a href="{{ route('login_weixin') }}" class="ml-1">微信登入</a>
                     <button type="submit" class="btn btn-primary ml-3">登入</button>
                 </div>
             </form>

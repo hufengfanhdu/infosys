@@ -46,7 +46,7 @@
                         <a class="dropdown-item" href="{{ route('users.edit',\Illuminate\Support\Facades\Auth::user()) }}">编辑资料</a>
                         <a class="dropdown-item" href="#">通知列表</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="{{ route('logout') }}">退出登出</a>
+                    <a class="dropdown-item text-danger" href="{{ route('logout') }}">退出登入</a>
                 </div>
                 </li>
             @endauth

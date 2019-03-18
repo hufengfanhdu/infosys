@@ -18,7 +18,11 @@
         </li>
         <li class="list-group-item">
             <h5 class="text-primary ">绑定邮箱</h5>
-            {{ $user->email }}
+            @if($user->email)
+                {{ $user->email }}
+            @else
+                <a href="{{route('email_bind')}}" class="btn btn-primary">前往绑定</a>
+            @endif
         </li>
     </ul>
 </div>

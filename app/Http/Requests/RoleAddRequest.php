@@ -16,6 +16,7 @@ class RoleAddRequest extends FormRequest
      */
     public function rules()
     {
+        //127.0.0.1
         if (isActive(route('managers.store'),14)){
             return [
                 'id' => 'exists:users,id|required|integer',

@@ -20,7 +20,7 @@
 
     @include('layouts._header')
 
-    <div class="container my-5">
+    <div class="container mt-5">
         @include('layouts._messages')
         @yield('content')
     </div>

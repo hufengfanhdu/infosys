@@ -44,6 +44,24 @@ return [
         'client_id' => env('GIT_CLIENT_ID'),
         'client_secret' => env('GIT_CLIENT_SECRET'),
         'redirect' => env('GIT_REDIRECT')
-    ]
+    ],
+
+    'weixin' => [
+        'client_id' => env('WEIXIN_KEY'),
+        'client_secret' => env('WEIXIN_SECRET'),
+        'redirect' => env('WEIXIN_REDIRECT_URI')
+    ],
+
+    'weixinweb' => [
+        'client_id' => env('WEIXINWEB_KEY'),
+        'client_secret' => env('WEIXINWEB_SECRET'),
+        'redirect' => env('WEIXINWEB_REDIRECT_URI'),
+    ],
+
+    'qq' => [
+        'client_id' => env('QQ_KEY'),
+        'client_secret' => env('QQ_SECRET'),
+        'redirect' => env('QQ_REDIRECT_URI')
+    ],
 
 ];
