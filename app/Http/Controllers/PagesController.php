@@ -19,7 +19,7 @@ class PagesController extends Controller
            'only' => ['login_create','login_store','send_email','confirm_email']
         ]);
         $this->middleware('throttle:5,1')->only('send_email');
-        $this->middleware('throttle:3,10')->only('login_store');
+        $this->middleware('throttle:5,10')->only('login_store');
     }
 
     public function index() {

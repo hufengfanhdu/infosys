@@ -32,6 +32,7 @@ function location($ip){
     $location = curl_exec($ch);
     $location = json_decode($location);
     curl_close($ch);
+
     $ip_location = '';
     if(!empty($location) && $location->code == 0) {
         $ipdata = $location->data;

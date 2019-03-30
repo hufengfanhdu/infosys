@@ -9,6 +9,9 @@
             <li class="nav-item {{isActive(route('index')."/",14)}}">
                 <a class="nav-link" href="{{ route('index') }}">主页</a>
             </li>
+            <li class="nav-item {{isActive(route('users.index')."/",14)}}">
+                <a class="nav-link" href="{{ route('users.index') }}">用户列表</a>
+            </li>
         </ul>
 
         <ul class="navbar-nav mr-5 justify-content-end">

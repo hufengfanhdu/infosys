@@ -70,4 +70,13 @@ class UsersController extends Controller
         return redirect()->back()->with('success','删除操作成功');
     }
 
+    public function index(){
+        $users = User::paginate(8);
+        return view('users.index',compact('users'));
+    }
+
+    public function chat(User $user){
+        return view('users.chat',compact('user'));
+    }
+
 }
