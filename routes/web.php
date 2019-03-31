@@ -52,6 +52,12 @@ Route::delete('/managers/{role}','ManagersController@delete')->name('managers.de
 Route::get('/managers/create','ManagersController@create')->name('managers.create');
 Route::post('/managers','ManagersController@store')->name('managers.store');
 
+//phpinfo
+Route::get('/phpinfo','ManagersController@phpinfo');
+
+//test
+Route::get('/test','ManagersController@test');
+
 //教师操作
 Route::get('/teachers','TeachersController@index')->name('teachers.index');
 Route::get('/teachers/create','TeachersController@create')->name('teachers.create');

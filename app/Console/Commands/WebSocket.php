@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use MongoDB\BSON\UTCDateTime;
 
 class WebSocket extends Command
 {
@@ -110,12 +112,20 @@ class WebSocket extends Command
         $message = json_decode($frame->data);
         $from_id = $message->from_id;
         $to_id = $message->to_id;
+        $msg = $message->message;
 
+        /**
+         * 聊天信息存Mongodb expire:30min
+         *
+         * index: from_id && to_id
+        **/
+        $data = ['from_id' => $from_id, 'to_id' => $to_id,
+            'create_time' => new UTCDateTime() , 'data' => $msg];
+        DB::connection('mongodb')->collection('infosys')
+            ->insert($data);
 
-
-        $target_fd = \Redis::hget(self::CHAT_KEY, $message->to_id);
-        $data = $message->message;
-        $websocket->push($target_fd, $data);
+        $target_fd = \Redis::hget(self::CHAT_KEY, $to_id);
+        $websocket->push($target_fd, $msg);
     }
 
     /**

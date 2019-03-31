@@ -6,7 +6,11 @@ use App\Http\Requests\RoleAddRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use function MongoDB\BSON\toJSON;
+use MongoDB\BSON\UTCDateTime;
+use Monolog\Handler\Mongo;
 
 class ManagersController extends Controller
 {
@@ -60,5 +64,26 @@ class ManagersController extends Controller
             return redirect()->back()->with('danger','密码错误')->withInput();
         }
 
+    }
+
+    public function test(){
+//        $message =  DB::connection('mongodb')->collection('infosys')
+//            ->get()->toArray();
+//        return response()->json($message);
+
+        $time = new UTCDateTime();
+        $utc_time = json_decode($time);
+        $local_time = $utc_time+1000*60*60*8;
+        $local = new UTCDateTime($local_time);
+        $arr = ['from_id'=> 1,'to_id'=> 4,'create_time'=> $time];
+        DB::connection('mongodb')->collection('infosys')
+            ->insert($arr);
+        //$time = Date('Y-m-d H:i:s',time());
+
+
+    }
+
+    public function phpinfo(){
+        phpinfo();
     }
 }
